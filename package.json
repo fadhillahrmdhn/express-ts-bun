@@ -26,7 +26,9 @@
     "lint": "bunx eslint src --ext .ts",
     "lint:fix": "bunx eslint src --ext .ts --fix",
     "prod": "NODE_ENV=production bun src/index.ts",
-    "prepare": "husky"
+    "prepare": "husky",
+    "lint-staged": "lint-staged",
+    "commitlint": "commitlint"
   },
   "lint-staged": {
     "*.{ts,js,tsx,jsx}": [
@@ -39,9 +41,5 @@
     "extends": [
       "@commitlint/config-conventional"
     ]
-  },
-  "trustedDependencies": [
-    "@tailwindcss/oxide",
-    "unrs-resolver"
-  ]
+  }
 }

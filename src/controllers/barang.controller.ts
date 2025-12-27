@@ -24,7 +24,8 @@ export const getAllBarang = async (
     const message = error instanceof Error ? error.message : String(error)
     next(
       new Error(
-        'Error pada file src/controllers/barang.controller.ts: ' + message
+        'Error pada file src/controllers/barang.controller.ts: getAllBarang - ' +
+          message
       )
     )
   }
@@ -47,7 +48,8 @@ export const getDataBarangById = async (
     const message = error instanceof Error ? error.message : String(error)
     next(
       new Error(
-        'Error pada file src/controllers/barang.controller.ts: ' + message
+        'Error pada file src/controllers/barang.controller.ts: getDataBarangById - ' +
+          message
       )
     )
   }
@@ -79,7 +81,8 @@ export const insertDataBarang = async (
     const message = error instanceof Error ? error.message : String(error)
     next(
       new Error(
-        'Error pada file src/controllers/barang.controller.ts: ' + message
+        'Error pada file src/controllers/barang.controller.ts: insertDataBarang - ' +
+          message
       )
     )
   }
@@ -112,7 +115,7 @@ export const updateDataBarang = async (
     const message = error instanceof Error ? error.message : String(error)
     next(
       new Error(
-        'Error pada file src/controllers/barang.controller.ts: updateDataBarang' +
+        'Error pada file src/controllers/barang.controller.ts: updateDataBarang - ' +
           message
       )
     )
@@ -137,7 +140,7 @@ export const deleteDataBarang = async (
     const message = error instanceof Error ? error.message : String(error)
     next(
       new Error(
-        'Error pada file src/controllers/barang.controller.ts: deleteDataBarang' +
+        'Error pada file src/controllers/barang.controller.ts: deleteDataBarang - ' +
           message
       )
     )

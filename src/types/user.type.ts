@@ -1,8 +1,8 @@
 export default interface UserType {
   user_id: string
   email: string
-  name: string
+  nama: string
   password: string
-  confirmPassword: string
+  confirmPassword?: string
   role: string
 }

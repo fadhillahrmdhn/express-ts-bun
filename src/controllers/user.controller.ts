@@ -1,7 +1,11 @@
 import type { NextFunction, Request, Response } from 'express'
-import { inputUserValidation } from '../validations/user.validation'
-import { createUser } from '../services/user.service'
-import { encrypt } from '../utils/bcrypt'
+import {
+  inputUserValidation,
+  loginUserValidation
+} from '../validations/user.validation'
+import { createUser, userLogin } from '../services/user.service'
+import { compare, encrypt } from '../utils/bcrypt'
+import { generateAccessToken, generateRefreshToken } from '../utils/jwt'
 
 export const registerUser = async (
   req: Request,
@@ -33,6 +37,62 @@ export const registerUser = async (
     next(
       new Error(
         'Error pada file src/controllers/user.controller.ts: registerUser - ' +
+          message
+      )
+    )
+  }
+}
+
+export const loginUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<Response | void> => {
+  try {
+    const { error, value } = loginUserValidation(req.body)
+    if (error != null) {
+      return res.status(400).json({
+        error: error.details[0]?.message,
+        message: 'input login user gagal',
+        data: null
+      })
+    }
+    const user = await userLogin(value)
+    if (user == null) {
+      return res.status(400).json({
+        error: 'Email atau password salah',
+        message: 'Login gagal',
+        data: null
+      })
+    }
+    if (!(await compare(value.password, user.password))) {
+      return res.status(400).json({
+        error: 'Email atau password salah',
+        message: 'Login gagal',
+        data: null
+      })
+    }
+    const usr = {
+      id: user.user_id,
+      email: user.email,
+      nama: user.nama,
+      role: user.role
+    }
+
+    const accessToken = generateAccessToken(usr)
+    const refreshToken = generateRefreshToken(usr)
+    return res.status(200).json({
+      error: null,
+      message: 'Login user berhasil',
+      data: usr,
+      accessToken,
+      refreshToken
+    })
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error)
+    next(
+      new Error(
+        'Error pada file src/controllers/user.controller.ts: loginUser - ' +
           message
       )
     )

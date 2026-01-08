@@ -7,12 +7,14 @@ import {
   deleteDataBarang
 } from '../controllers/barang.controller.js'
 
+import { authenticated } from '../middleware/auth.middleware.js'
+
 const barangRouter = Router()
 
-barangRouter.get('/barang', getAllBarang)
-barangRouter.get('/barang/:id', getDataBarangById)
-barangRouter.post('/barang', insertDataBarang)
-barangRouter.put('/barang/:id', updateDataBarang)
-barangRouter.delete('/barang/:id', deleteDataBarang)
+barangRouter.get('/barang', authenticated, getAllBarang)
+barangRouter.get('/barang/:id', authenticated, getDataBarangById)
+barangRouter.post('/barang', authenticated, insertDataBarang)
+barangRouter.put('/barang/:id', authenticated, updateDataBarang)
+barangRouter.delete('/barang/:id', authenticated, deleteDataBarang)
 
 export default barangRouter

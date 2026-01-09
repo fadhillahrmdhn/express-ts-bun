@@ -1,8 +1,10 @@
+import type { Decimal } from '@prisma/client/runtime/index-browser'
+
 export default interface BarangType {
   id: number
   nama: string
   jumlah: number
-  harga: number
+  harga: Decimal
   created_at?: Date
   updated_at?: Date
 }

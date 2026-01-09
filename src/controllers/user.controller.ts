@@ -72,19 +72,15 @@ export const loginUser = async (
         data: null
       })
     }
-    const usr = {
-      id: user.user_id,
-      email: user.email,
-      nama: user.nama,
-      role: user.role
-    }
 
-    const accessToken = generateAccessToken(usr)
-    const refreshToken = generateRefreshToken(usr)
+    user.password = '' //kosongkan password sebelum dikirim ke client
+
+    const accessToken = generateAccessToken(user)
+    const refreshToken = generateRefreshToken(user)
     return res.status(200).json({
       error: null,
       message: 'Login user berhasil',
-      data: usr,
+      data: user,
       accessToken,
       refreshToken
     })

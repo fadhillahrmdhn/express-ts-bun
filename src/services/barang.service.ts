@@ -16,18 +16,18 @@ export const getBarangById = async (id: number): Promise<Barang | null> => {
   return data
 }
 
-export const insertBarang = async (Payload: BarangType): Promise<Barang> => {
+export const insertBarang = async (payload: BarangType): Promise<Barang> => {
   const data = await prisma.barang.create({
-    data: Payload
+    data: payload
   })
 
   return data
 }
 
 export const updateBarang = async (
-  Payload: BarangType
+  payload: BarangType
 ): Promise<Barang | null> => {
-  const { id, ...dataToUpdate } = Payload
+  const { id, ...dataToUpdate } = payload
   const data = await prisma.barang.update({
     where: { id },
     data: dataToUpdate

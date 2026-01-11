@@ -5,7 +5,7 @@ import userRouter from './user.route'
 
 const router = Router()
 
-//http://localhost:3000/api
+//http://localhost:4000/api
 
 // 1. Middleware Pertama
 router.use('/api', barangRouter)

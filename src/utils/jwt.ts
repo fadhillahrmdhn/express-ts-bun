@@ -27,7 +27,7 @@ const generateRefreshToken = (user: UserType): string => {
   return jsonWebToken.sign(user, process.env.JWT_REFRESH_SECRET, options)
 }
 
-const verifyToken = (token: string): string | JwtPayload | null => {
+const verifyRefreshToken = (token: string): string | JwtPayload | null => {
   if (!process.env.JWT_REFRESH_SECRET) {
     throw new Error('JWT_REFRESH_SECRET is not defined')
   }
@@ -60,7 +60,7 @@ const verifyAccessToken = (token: string): string | JwtPayload | null => {
 export {
   generateAccessToken,
   generateRefreshToken,
-  verifyToken,
+  verifyRefreshToken,
   parseJWT,
   verifyAccessToken
 }

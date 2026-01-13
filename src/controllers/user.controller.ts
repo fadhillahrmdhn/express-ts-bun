@@ -5,7 +5,12 @@ import {
 } from '../validations/user.validation'
 import { createUser, userLogin } from '../services/user.service'
 import { compare, encrypt } from '../utils/bcrypt'
-import { generateAccessToken, generateRefreshToken } from '../utils/jwt'
+import {
+  generateAccessToken,
+  generateRefreshToken,
+  parseJWT,
+  verifyRefreshToken
+} from '../utils/jwt'
 
 export const registerUser = async (
   req: Request,
@@ -89,6 +94,62 @@ export const loginUser = async (
     next(
       new Error(
         'Error pada file src/controllers/user.controller.ts: loginUser - ' +
+          message
+      )
+    )
+  }
+}
+
+export const refreshToken = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<Response | void> => {
+  try {
+    const authHeader = req.headers.authorization
+    const token = authHeader?.split(' ')[1]
+    if (token == null) {
+      return res.status(401).json({
+        error: 'Unauthorized',
+        message: 'Token tidak ditemukan',
+        data: null
+      })
+    }
+    const verify = verifyRefreshToken(token)
+    if (verify == null) {
+      return res.status(401).json({
+        error: 'Token tidak valid',
+        message: 'Refresh token gagal',
+        data: null
+      })
+    }
+
+    const data = parseJWT(token)
+    const user = await userLogin(data)
+    if (user == null) {
+      return res.status(401).json({
+        error: 'User tidak ditemukan',
+        message: 'Refresh token gagal',
+        data: null
+      })
+    }
+    user.password = '' //kosongkan password sebelum dikirim ke client
+
+    const newAccessToken = generateAccessToken(user)
+    const newRefreshToken = generateRefreshToken(user)
+
+    return res.status(200).json({
+      error: null,
+      message: 'Refresh token berhasil',
+      data: user,
+      accessToken: newAccessToken,
+      refreshToken: newRefreshToken
+    })
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error)
+    next(
+      new Error(
+        'Error pada file src/controllers/user.controller.ts: refreshToken - ' +
           message
       )
     )

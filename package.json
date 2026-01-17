@@ -51,7 +51,8 @@
     "prod": "NODE_ENV=production bun src/index.ts",
     "prepare": "husky",
     "lint-staged": "lint-staged",
-    "commitlint": "commitlint"
+    "commitlint": "commitlint",
+    "test": "jest --detectOpenHandles"
   },
   "lint-staged": {
     "*.{ts,js,tsx,jsx}": [

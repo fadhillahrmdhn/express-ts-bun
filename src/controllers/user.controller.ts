@@ -64,8 +64,8 @@ export const loginUser = async (
     }
     const user = await userLogin(value)
     if (user == null) {
-      return res.status(400).json({
-        error: 'Email atau password salah',
+      return res.status(404).json({
+        error: 'user tidak ditemukan',
         message: 'Login gagal',
         data: null
       })

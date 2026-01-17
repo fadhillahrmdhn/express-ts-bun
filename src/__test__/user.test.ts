@@ -21,6 +21,12 @@ const getRefreshToken = (): string => {
 
 describe('User', () => {
   beforeAll(async () => {
+    // Hapus user lama jika ada (sisa dari test sebelumnya yang crash/stop paksa)
+    await prisma.user.deleteMany({
+      where: {
+        email: { in: ['@stella.com', '@ana.com'] }
+      }
+    })
     await prisma.user.create({
       data: {
         email: '@stella.com',
@@ -31,8 +37,21 @@ describe('User', () => {
     })
   })
 
+  //   afterEach(async () => {
+  //   await prisma.user.deleteMany({
+  //     where: {
+  //       email: '@ana.com'
+  //     }
+  //   })
+  // })
+
   afterAll(async () => {
-    await prisma.user.deleteMany({ where: { email: '@stella.com' } })
+    // Membersihkan semua user dummy sekaligus
+    await prisma.user.deleteMany({
+      where: {
+        email: { in: ['@stella.com', '@ana.com'] }
+      }
+    })
   })
 
   it('user login data valid', async () => {
@@ -62,20 +81,6 @@ describe('User', () => {
     expect(response.body.message).toEqual('Login gagal')
   })
 
-  //   afterEach(async () => {
-  //   await prisma.user.deleteMany({
-  //     where: {
-  //       email: '@ana.com'
-  //     }
-  //   })
-  // })
-  afterAll(async () => {
-    await prisma.user.deleteMany({
-      where: {
-        email: '@ana.com'
-      }
-    })
-  })
   it('register user data valid', async () => {
     const response = await supertest(web).post('/api/register').send({
       nama: 'Ana',

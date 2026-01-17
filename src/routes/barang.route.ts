@@ -5,7 +5,7 @@ import {
   getDataBarangById,
   updateDataBarang,
   deleteDataBarang
-} from '../controllers/barang.controller.js'
+} from '../controllers/barang.controller.ts'
 
 import { authenticated } from '../middleware/auth.middleware.js'
 

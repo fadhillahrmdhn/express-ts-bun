@@ -1,5 +1,8 @@
 import type { NextFunction, Request, Response } from 'express'
-import { updateBarangValidation } from '../validations/barang.validation'
+import {
+  inputBarangValidation,
+  updateBarangValidation
+} from '../validations/barang.validation'
 import {
   deleteBarang,
   getBarang,
@@ -61,7 +64,7 @@ export const insertDataBarang = async (
   next: NextFunction
 ): Promise<Response | void> => {
   try {
-    const { error, value } = updateBarangValidation(req.body)
+    const { error, value } = inputBarangValidation(req.body)
     if (error != null) {
       return res.status(400).json({
         //error: error.details.map((detail) => detail.message),

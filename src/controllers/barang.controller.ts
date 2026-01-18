@@ -66,7 +66,7 @@ export const insertDataBarang = async (
       return res.status(400).json({
         //error: error.details.map((detail) => detail.message),
         error: error.details[0]?.message,
-        message: 'Validasi input barang gagal',
+        message: 'input barang gagal',
         data: value
       })
     }
@@ -74,7 +74,7 @@ export const insertDataBarang = async (
 
     return res.status(200).json({
       error: null,
-      message: 'Validasi input barang berhasil',
+      message: 'input barang berhasil',
       data: barang
     })
   } catch (error) {
@@ -100,7 +100,7 @@ export const updateDataBarang = async (
       return res.status(400).json({
         //error: error.details.map((detail) => detail.message),
         error: error.details[0]?.message,
-        message: 'Validasi update barang gagal',
+        message: 'update barang gagal',
         data: value
       })
     }
@@ -108,7 +108,7 @@ export const updateDataBarang = async (
 
     return res.status(200).json({
       error: null,
-      message: 'Validasi update barang berhasil',
+      message: 'update barang berhasil',
       data: barang
     })
   } catch (error) {
@@ -133,7 +133,7 @@ export const deleteDataBarang = async (
 
     return res.status(200).json({
       error: null,
-      message: 'Validasi delete barang berhasil',
+      message: 'delete barang berhasil',
       data: barang
     })
   } catch (error) {

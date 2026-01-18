@@ -1,5 +1,5 @@
 import type { NextFunction, Request, Response } from 'express'
-import { inputBarangValidation } from '../validations/barang.validation'
+import { updateBarangValidation } from '../validations/barang.validation'
 import {
   deleteBarang,
   getBarang,
@@ -61,7 +61,7 @@ export const insertDataBarang = async (
   next: NextFunction
 ): Promise<Response | void> => {
   try {
-    const { error, value } = inputBarangValidation(req.body)
+    const { error, value } = updateBarangValidation(req.body)
     if (error != null) {
       return res.status(400).json({
         //error: error.details.map((detail) => detail.message),
@@ -95,7 +95,7 @@ export const updateDataBarang = async (
 ): Promise<Response | void> => {
   try {
     const { id } = req.params
-    const { error, value } = inputBarangValidation(req.body)
+    const { error, value } = updateBarangValidation(req.body)
     if (error != null) {
       return res.status(400).json({
         //error: error.details.map((detail) => detail.message),

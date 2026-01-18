@@ -1,7 +1,7 @@
 import joi from 'joi'
 import type BarangType from '../types/BarangType.js'
 
-export const inputBarangValidation = (
+export const updateBarangValidation = (
   payload: BarangType
 ): joi.ValidationResult<BarangType> => {
   const schema = joi
